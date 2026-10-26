@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rohit Kalgutkar</title>
+<meta name="description" content="When I'm not debugging, I'm pushing commits to GitHub as a hobby.">
+<meta name="color-scheme" content="light dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Palette taken from the burgundy shirt: soft blush light mode, deep wine dark mode */
+:root{
+  --bg:#fcf7f6; --bg2:#f6eaea; --card:#ffffff; --border:rgba(122,31,51,.13);
+  --text:#2a1519; --muted:#7a5d62; --a1:#8c2a43; --a2:#d9788f; --a3:#f3c3c9;
+  --btn-text:#fff; --shadow:0 18px 40px -22px rgba(122,31,51,.45);
+  --g1:rgba(217,120,143,.38); --g2:rgba(243,195,201,.7); --g3:rgba(140,42,67,.16);
+}
+:root[data-theme="dark"]{
+  --bg:#150b0e; --bg2:#1d1013; --card:#241418; --border:rgba(243,195,201,.12);
+  --text:#f7eceb; --muted:#b79a9e; --a1:#e58aa0; --a2:#c4506b; --a3:#7a2a3d;
+  --btn-text:#2a0f17; --shadow:0 18px 40px -20px rgba(0,0,0,.8);
+  --g1:rgba(196,80,107,.30); --g2:rgba(122,42,61,.45); --g3:rgba(229,138,160,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Space Grotesk',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.mono{font-family:'JetBrains Mono',monospace}
+
+/* lightweight background: soft radial gradients moved with transform only (no blur filters) */
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden;background:linear-gradient(180deg,var(--bg),var(--bg2));contain:strict}
+.blob{position:absolute;border-radius:50%;will-change:transform}
+.b1{width:620px;height:620px;top:-200px;left:-160px;background:radial-gradient(circle,var(--g1),transparent 68%);animation:f1 26s ease-in-out infinite alternate}
+.b2{width:700px;height:700px;bottom:-260px;right:-200px;background:radial-gradient(circle,var(--g2),transparent 68%);animation:f2 32s ease-in-out infinite alternate}
+.b3{width:460px;height:460px;top:40%;left:50%;background:radial-gradient(circle,var(--g3),transparent 68%);animation:f1 38s ease-in-out infinite alternate-reverse}
+@keyframes f1{to{transform:translate3d(80px,60px,0)}}
+@keyframes f2{to{transform:translate3d(-90px,-50px,0)}}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:14px 5vw;background:color-mix(in srgb,var(--bg) 92%,transparent);border-bottom:1px solid var(--border)}
+.logo{font-weight:700;letter-spacing:-.02em}
+.logo span{color:var(--a1)}
+.nav-r{display:flex;align-items:center;gap:22px}
+.nav-r a.l{color:var(--muted);font-size:.92rem;transition:color .2s}
+.nav-r a.l:hover{color:var(--text)}
+#theme{width:42px;height:42px;border-radius:50%;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;display:grid;place-items:center;transition:transform .3s,border-color .2s}
+#theme:hover{transform:rotate(25deg);border-color:var(--a1)}
+#theme svg{width:20px;height:20px}
+.sun{display:none}
+:root[data-theme="dark"] .sun{display:block}
+:root[data-theme="dark"] .moon{display:none}
+@media(max-width:620px){.nav-r a.l{display:none}}
+
+section{padding:110px 5vw;max-width:1100px;margin:0 auto}
+
+.hero{min-height:100vh;display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;padding-top:120px}
+.tag{position:relative;display:inline-flex;align-items:center;gap:10px;padding:6px 14px;border:1px solid var(--border);background:var(--card);border-radius:99px;font-size:.82rem;color:var(--muted);margin-bottom:22px}
+.dot{position:relative;width:8px;height:8px;border-radius:50%;background:#3ecf5a}
+.dot::after{content:"";position:absolute;inset:0;border-radius:50%;background:#3ecf5a;animation:ping 2s ease-out infinite}
+@keyframes ping{to{transform:scale(3);opacity:0}}
+h1{font-size:clamp(2.6rem,7vw,5rem);line-height:1.02;letter-spacing:-.04em;font-weight:700}
+h1 .g{background:linear-gradient(100deg,var(--a1),var(--a2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.role{margin:18px 0 8px;font-size:1.15rem;color:var(--muted);min-height:1.8em}
+.caret{display:inline-block;width:2px;height:1.1em;background:var(--a1);vertical-align:-3px;margin-left:3px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.lead{max-width:520px;color:var(--muted);margin-bottom:30px}
+.btns{display:flex;gap:14px;flex-wrap:wrap}
+.btn{padding:13px 24px;border-radius:12px;font-weight:500;border:1px solid var(--border);background:var(--card);transition:transform .2s,box-shadow .2s,border-color .2s;display:inline-flex;gap:8px;align-items:center}
+.btn:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--a1)}
+.btn.p{background:linear-gradient(120deg,var(--a1),var(--a2));color:var(--btn-text);border:none;font-weight:700}
+
+.photo-wrap{display:grid;place-items:center;perspective:900px}
+.photo{position:relative;width:min(100%,360px);aspect-ratio:3/4;transition:transform .2s ease-out;will-change:transform}
+.ring{position:absolute;inset:-6px;border-radius:34px;overflow:hidden}
+.ring::before{content:"";position:absolute;left:50%;top:50%;width:200%;aspect-ratio:1;margin:-100% 0 0 -100%;background:conic-gradient(from 0deg,var(--a1),var(--a3),var(--a2),var(--a1));animation:spin 10s linear infinite;will-change:transform}
+@keyframes spin{to{transform:rotate(360deg)}}
+.frame{position:absolute;inset:0;border-radius:28px;overflow:hidden;background:var(--bg2);box-shadow:var(--shadow)}
+.frame img{width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block}
+.mono-fallback{display:none;position:absolute;inset:0;place-items:center;font-size:5rem;font-weight:700;color:var(--a1)}
+.chip{position:absolute;padding:8px 14px;border-radius:12px;background:var(--card);border:1px solid var(--border);font-size:.8rem;box-shadow:var(--shadow);animation:bob 5s ease-in-out infinite;will-change:transform}
+.c1{top:8%;right:-8%}.c2{bottom:12%;left:-10%;animation-delay:-2.5s}
+@keyframes bob{50%{transform:translate3d(0,-10px,0)}}
+@media(max-width:820px){.hero{grid-template-columns:1fr;text-align:center}.lead{margin-inline:auto}.btns{justify-content:center}.photo-wrap{order:-1}.photo{width:min(78%,300px)}.c1{right:-2%}.c2{left:-2%}}
+
+.eyebrow{color:var(--a1);font-size:.85rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px}
+h2{font-size:clamp(1.8rem,4vw,2.8rem);letter-spacing:-.03em;margin-bottom:34px}
+.glass{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;transition:transform .25s,border-color .25s,box-shadow .25s}
+.glass:hover{transform:translateY(-5px);border-color:var(--a2);box-shadow:var(--shadow)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin-bottom:28px}
+.stat b{display:block;font-size:2.3rem;letter-spacing:-.03em;color:var(--a1)}
+.stat span{color:var(--muted);font-size:.9rem}
+.repos{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.repo h3{font-size:1.05rem;margin-bottom:6px;word-break:break-word}
+.repo p{color:var(--muted);font-size:.9rem;min-height:3em;margin-bottom:14px}
+.meta{display:flex;gap:14px;font-size:.8rem;color:var(--muted);flex-wrap:wrap}
+.note{color:var(--muted);padding:20px}
+.skeleton{height:150px;border-radius:20px;background:var(--card);border:1px solid var(--border);animation:sk 1.4s ease-in-out infinite}
+@keyframes sk{50%{opacity:.5}}
+.contact{text-align:center}
+.contact p{color:var(--muted);max-width:480px;margin:0 auto 28px}
+#github{display:none}
+.gh-logo{position:relative;width:50px;height:50px;border-radius:50%;display:grid;place-items:center;background:var(--text);color:var(--bg);transition:transform .35s cubic-bezier(.3,1.6,.5,1),box-shadow .3s}
+.gh-logo svg{width:28px;height:28px;transition:transform .5s}
+.gh-logo::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:2px solid var(--a2);opacity:0;transform:scale(.8);transition:opacity .3s,transform .3s}
+.gh-logo:hover{transform:translateY(-4px) scale(1.08);box-shadow:var(--shadow)}
+.gh-logo:hover svg{transform:rotate(-12deg) scale(1.08)}
+.gh-logo:hover::after{opacity:1;transform:scale(1)}
+.gh-logo[data-tip]:hover::before{content:attr(data-tip);position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%);white-space:nowrap;font:500 .75rem 'JetBrains Mono',monospace;padding:5px 10px;border-radius:8px;background:var(--card);color:var(--text);border:1px solid var(--border);box-shadow:var(--shadow)}
+.dev{display:grid;grid-template-columns:1fr 1.1fr;gap:40px;align-items:center}
+.dev h2{margin-bottom:16px}
+.dev .copy p{color:var(--muted);margin-bottom:14px;max-width:460px}
+.dev .copy q{display:block;font-size:1.05rem;color:var(--text);border-left:3px solid var(--a2);padding-left:14px;margin-top:20px;quotes:none}
+.term{background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);overflow:hidden;font-size:.85rem}
+.term-bar{display:flex;gap:7px;padding:12px 14px;border-bottom:1px solid var(--border)}
+.term-bar i{width:11px;height:11px;border-radius:50%;background:var(--a3);opacity:.9}
+.term-bar i:nth-child(2){background:var(--a2)}.term-bar i:nth-child(3){background:var(--a1)}
+.term-body{padding:18px 20px;display:grid;gap:7px}
+.ln{opacity:0;transform:translate3d(-8px,0,0);transition:opacity .4s ease,transform .4s ease;transition-delay:calc(var(--i)*320ms);word-break:break-word}
+.term.in .ln{opacity:1;transform:none}
+.cmd{color:var(--a1)}.hash{color:var(--a2)}.out{color:var(--muted)}
+@media(max-width:820px){.dev{grid-template-columns:1fr}}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:40px 5vw 50px;border-top:1px solid var(--border)}
+
+.rv{opacity:0;transform:translate3d(0,28px,0);transition:opacity .7s ease,transform .7s ease}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+
+<nav>
+  <a href="#top" class="logo">rohit<span>.</span>dev</a>
+  <div class="nav-r">
+    <a class="l" href="#dev">Developer</a>
+    <a class="l" id="nav-gh" href="#github" style="display:none">GitHub</a>
+    <a class="l" href="#contact">Contact</a>
+    <button id="theme" aria-label="Toggle light and dark theme">
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+  </div>
+</nav>
+
+<main id="top">
+<section class="hero">
+  <div>
+    <div class="tag rv"><i class="dot"></i> Open to collaborate</div>
+    <h1 class="rv">Hi, I'm<br><span class="g">Rohit Kalgutkar</span></h1>
+    <div class="role rv mono"><span id="typed"></span><span class="caret"></span></div>
+    <p class="lead rv">When I'm not debugging, I'm pushing commits to GitHub as a hobby.</p>
+    <div class="btns rv">
+      <a class="btn p" href="http://t.me/Rohit7393" target="_blank" rel="noopener">Chat on Telegram</a>
+      <a class="gh-logo" href="https://github.com/Rohitkalgutkar1" target="_blank" rel="noopener" aria-label="Open my GitHub profile" data-tip="git checkout profile">
+        <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="photo-wrap rv">
+    <div class="photo" id="tilt">
+      <div class="ring"></div>
+      <div class="frame">
+        <img id="pic" src="photo.jpg" alt="Portrait of Rohit Kalgutkar" decoding="async">
+        <div class="mono-fallback" id="mono">RK</div>
+      </div>
+      <div class="chip c1 mono">&lt;/&gt; clean code</div>
+      <div class="chip c2 mono">git push ✓</div>
+    </div>
+  </div>
+</section>
+
+<section id="dev" class="dev">
+  <div class="copy">
+    <div class="eyebrow rv mono">// about the developer</div>
+    <h2 class="rv">Commit. Push. Repeat.</h2>
+    <p class="rv">I like turning bugs into fixes and fixes into small, clean commits. Open source is how I learn in public, one pull request at a time.</p>
+    <q class="rv">Good code is a conversation, and every pull request is a reply.</q>
+  </div>
+  <div class="term rv" id="term">
+    <div class="term-bar"><i></i><i></i><i></i></div>
+    <div class="term-body mono">
+      <div class="ln" style="--i:0"><span class="cmd">$</span> whoami</div>
+      <div class="ln out" style="--i:1">rohit-kalgutkar</div>
+      <div class="ln" style="--i:2"><span class="cmd">$</span> git log --oneline</div>
+      <div class="ln" style="--i:3"><span class="hash">a1f3c9e</span> feat: keep learning in public</div>
+      <div class="ln" style="--i:4"><span class="hash">7b2d41a</span> fix: debug until it works</div>
+      <div class="ln" style="--i:5"><span class="hash">3c8e07f</span> docs: leave code cleaner than I found it</div>
+      <div class="ln" style="--i:6"><span class="hash">e90b5d2</span> chore: git push, repeat</div>
+      <div class="ln" style="--i:7"><span class="cmd">$</span> <span class="caret"></span></div>
+    </div>
+  </div>
+</section>
+
+<section id="github">
+  <div class="eyebrow rv mono">// contributions</div>
+  <h2 class="rv">Live from GitHub</h2>
+  <div class="stats rv" id="stats"></div>
+  <div class="repos" id="repos"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div>
+</section>
+
+<section id="contact" class="contact">
+  <div class="eyebrow rv mono">// say hello</div>
+  <h2 class="rv">Let's keep the conversation moving</h2>
+  <p class="rv">Questions, ideas or a pull request waiting for review. I'm happy to chat.</p>
+  <div class="btns rv" style="justify-content:center">
+    <a class="btn p" href="http://t.me/Rohit7393" target="_blank" rel="noopener">Message on Telegram</a>
+    <a class="gh-logo" href="https://github.com/Rohitkalgutkar1" target="_blank" rel="noopener" aria-label="Open my GitHub profile" data-tip="git checkout profile">
+      <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+    </a>
+  </div>
+</section>
+</main>
+
+<footer>© <span id="yr"></span> Rohit Kalgutkar</footer>
+
+<script>
+// theme: follows system, remembers manual choice
+const root=document.documentElement;
+function stored(){try{return localStorage.getItem('theme')}catch(e){return null}}
+function setTheme(t,save){root.setAttribute('data-theme',t);if(save){try{localStorage.setItem('theme',t)}catch(e){}}}
+const mq=matchMedia('(prefers-color-scheme: dark)');
+setTheme(stored()||(mq.matches?'dark':'light'),false);
+mq.addEventListener('change',e=>{if(!stored())setTheme(e.matches?'dark':'light',false)});
+document.getElementById('theme').onclick=()=>setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark',true);
+
+// photo fallbacks: local file -> original site image -> initials
+const pic=document.getElementById('pic');
+const fallbacks=['https://sites.google.com/sitesv-images-rt/AMxu72uiGzpdxltvia95qCkJbtc64TyRQpjt67VwLNEflJb0mlrA3_NHHau9mlzKmMDeCkKR9AE-drkVGLWw3ZBHNIUuk3zjy-YIHuWQ5r0d5SzQa-UZFpiOXW7oDwsXN8INFHwiN_21UdLpx_sY1ULBJRaeS97IOYofBIO5UXSv7nSvf_sGMcDmV-hVkgq2J4LXiZ192Aw_pYbC51MdUbBkzQRTiaVSE6FC0qjoBNxOUeM=w1280'];
+pic.onerror=()=>{const n=fallbacks.shift();if(n){pic.src=n}else{pic.style.display='none';document.getElementById('mono').style.display='grid'}};
+
+// typing effect
+const roles=['Open-source contributor','Bug hunter & debugger','Commit pusher by hobby'];
+let ri=0,ci=0,del=false;const el=document.getElementById('typed');
+(function tick(){const w=roles[ri];el.textContent=w.slice(0,ci);
+  if(!del&&ci===w.length){del=true;return setTimeout(tick,1600)}
+  if(del&&ci===0){del=false;ri=(ri+1)%roles.length}
+  ci+=del?-1:1;setTimeout(tick,del?35:70)})();
+
+// scroll reveal
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+function observe(){document.querySelectorAll('.rv:not(.in)').forEach((n,i)=>{n.style.transitionDelay=(i%4)*80+'ms';io.observe(n)})}
+observe();
+
+// gentle tilt (throttled with rAF)
+const t=document.getElementById('tilt');
+if(matchMedia('(hover:hover)').matches){
+  let raf=0;
+  t.parentElement.addEventListener('mousemove',e=>{
+    if(raf)return;
+    raf=requestAnimationFrame(()=>{raf=0;const r=t.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;t.style.transform=`rotateY(${x*10}deg) rotateX(${-y*10}deg)`});
+  });
+  t.parentElement.addEventListener('mouseleave',()=>t.style.transform='');
+}
+
+// GitHub data (live)
+const U='Rohitkalgutkar1';
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function countUp(n,el){let s=0;const step=Math.max(1,Math.ceil(n/30));const id=setInterval(()=>{s=Math.min(n,s+step);el.textContent=s;if(s>=n)clearInterval(id)},30)}
+Promise.all([
+  fetch(`https://api.github.com/users/${U}`).then(r=>{if(!r.ok)throw 0;return r.json()}),
+  fetch(`https://api.github.com/users/${U}/repos?sort=updated&per_page=30`).then(r=>{if(!r.ok)throw 0;return r.json()})
+]).then(([u,repos])=>{
+  const stars=repos.reduce((a,r)=>a+r.stargazers_count,0);
+  const items=[['Public repos',u.public_repos],['Followers',u.followers],['Stars earned',stars]];
+  const st=document.getElementById('stats');
+  st.innerHTML=items.map(i=>`<div class="glass stat"><b data-n="${i[1]}">0</b><span>${i[0]}</span></div>`).join('');
+  st.querySelectorAll('b').forEach(b=>countUp(+b.dataset.n,b));
+  const list=repos.filter(r=>!r.fork).slice(0,6);
+  const shown=list.length?list:repos.slice(0,6);
+  document.getElementById('repos').innerHTML=shown.length?shown.map(r=>`
+    <a class="glass repo rv" href="${esc(r.html_url)}" target="_blank" rel="noopener">
+      <h3>${esc(r.name)}</h3>
+      <p>${esc(r.description||'No description yet.')}</p>
+      <div class="meta mono">${r.language?`<span>● ${esc(r.language)}</span>`:''}<span>★ ${r.stargazers_count}</span><span>⑂ ${r.forks_count}</span></div>
+    </a>`).join(''):'<div class="note">No public repositories to show yet.</div>';
+  document.getElementById('github').style.display='block';
+  document.getElementById('nav-gh').style.display='';
+  observe();
+}).catch(()=>{
+  // if GitHub data can't load, the section simply stays hidden
+  document.getElementById('github').remove();
+});
+
+document.getElementById('yr').textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
